@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -56,7 +56,18 @@ namespace BankOCR
         public static string Check(string src)
         {
             string d = ReadDigits(src);
-            return d;
+            if (d.Any(c => c == '?'))
+            {
+                return d + " ILL";
+            }
+            if (Checksum(d))
+            {
+                return d;
+            }
+            else
+            {
+                return d + " ERR";
+            }
         }
     }
 }
