@@ -93,5 +93,14 @@ namespace BankOCRTests
             Assert.True(OCR.Checksum("457508000"));
             Assert.False(OCR.Checksum("457508001"));
         }
+
+        [Test]
+        public void CheckTest()
+        {
+            Assert.AreEqual("000000051", OCR.Check(@"
+ _  _  _  _  _  _  _  _    
+| || || || || || || ||_   |
+|_||_||_||_||_||_||_| _|  |"));
+        }
     }
 }

@@ -43,6 +43,7 @@ namespace BankOCR
                                     digitsDictionary[c].ToString() : "?");
             return String.Concat(ds.ToArray());
         }
+
         public static bool Checksum(string d)
         {
             int[] checks = d.Reverse()
@@ -50,6 +51,12 @@ namespace BankOCR
                         .Select(x => Int32.Parse(x.Item1.ToString()) * x.Item2)
                         .ToArray();
             return checks.Sum() % 11 == 0;
+        }
+
+        public static string Check(string src)
+        {
+            string d = ReadDigits(src);
+            return d;
         }
     }
 }
