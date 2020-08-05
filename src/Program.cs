@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -68,6 +69,40 @@ namespace BankOCR
             {
                 return d + " ERR";
             }
+        }
+
+        public static char[] ToBitChars(string src)
+        {
+            // TODO refactor
+            string[] lines = src.Split("\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);  
+
+            char[] chars = lines[1].ToCharArray()
+                                .Concat(lines[2].ToCharArray())
+                                .Prepend(lines[0].ToCharArray()[1])
+                                .ToArray();
+
+            return chars;    
+        }
+        public static bool[] ToBits(string src)
+        {
+            char[] chars = ToBitChars(src);
+            bool[] bools =
+                (from c in chars
+                 select c == ' ' ? false : true)
+                .ToArray();
+            return bools;
+        }
+        public static BitArray ToBitArray(string src)
+        {
+            bool[] bits = ToBits(src);
+            return new BitArray(bits);
+        }
+        public static int ToBitInt(string src)
+        {
+            BitArray b = ToBitArray(src);
+            int[] i = new int[1];
+            b.CopyTo(i, 0);
+            return i[0];
         }
     }
 }

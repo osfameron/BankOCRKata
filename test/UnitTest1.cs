@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using BankOCR;
-using System;
+using System.Collections;
 
 namespace BankOCRTests
 {
@@ -109,6 +109,23 @@ namespace BankOCRTests
     _  _     _  _  _  _  _ 
   | _| _||_| _ |_   ||_||_|
   ||_  _|  | _||_|  ||_| _ "));
+        }
+
+        [Test]
+        public void BitArrayTest()
+        {
+            bool[] bits = {true, 
+                           true, false, true,
+                           false, true, false};
+            string shape = @"
+ _ 
+| |
+ _ ";
+            char[] chars = {'_','|',' ','|',' ','_',' '};
+            Assert.AreEqual(chars, OCR.ToBitChars(shape));
+            Assert.AreEqual(bits, OCR.ToBits(shape));
+            Assert.AreEqual(new BitArray(bits), OCR.ToBitArray(shape));
+            Assert.AreEqual(43, OCR.ToBitInt(shape));
         }
     }
 }
