@@ -7,18 +7,16 @@ namespace BankOCR
 {
     public class OCR
     {
-        public static string rawDigits = @"
- _     _  _     _  _  _  _  _ 
-| |  | _| _||_||_ |_   ||_||_|
-|_|  ||_  _|  | _||_|  ||_| _|";
+        public string Source { get; }
+        public OCRDigit[] Digits { get; }
 
-        public static string[] digits = Chunk(rawDigits).ToArray();
-
-        public static Dictionary<string, int> digitsDictionary =
-            digits.Select((s, i) => (s, i)).ToDictionary(x => x.Item1, x => x.Item2);
-
-        public static Dictionary<int, int> bitDictionary =
-            digits.Select((s, i) => (s, i)).ToDictionary(x => ToBitInt(ToBitArray(x.Item1)), x => x.Item2);
+        public OCR (string source)
+        {
+            Source = source;
+ 
+            var chunks = Chunk(source);
+            Digits = chunks.Select(c => new OCRDigit(c)).ToArray();  
+        }
 
         static void Main(string[] args)
         {
@@ -40,45 +38,71 @@ namespace BankOCR
             return output;
         }
 
+        public bool Checksum()
+        {
+            int[] checks = Digits.Reverse()
+                        .Select(d => d.Value)
+                        .Zip(Enumerable.Range(1,9))
+                        .Select(x => x.Item1.Value * x.Item2)
+                        .ToArray();
+            return checks.Sum() % 11 == 0;
+        }
+
+        public string Check()
+        {
+            if (Digits.Any(c => ! c.Value.HasValue))
+            {
+                return "{output}" + " ILL";
+            }
+            if (Checksum())
+            {
+                return "{output} OK";
+            }
+            else
+            {
+                return "{output} ERR";
+            }
+        }
+    }
+
+    public class OCRDigit {
+
+        public static string rawDigits = @"
+ _     _  _     _  _  _  _  _ 
+| |  | _| _||_||_ |_   ||_||_|
+|_|  ||_  _|  | _||_|  ||_| _|";
+
+        public static string[] digits = OCR.Chunk(rawDigits).ToArray();
+        public static Dictionary<int, int> bitDictionary =
+            digits
+                .Select((s, i) => (s, i))
+                .ToDictionary(
+                    x => ToBitInt(ToBitArray(x.Item1)), x => x.Item2);
+
+        public string Source { get; }
+        public int? Value { get; }
+        private BitArray bitArray;
+
+        public OCRDigit(string source, int value)
+        {
+            Source = source;
+            bitArray = ToBitArray(source);
+            Value = value;
+        }
+
+        public OCRDigit(string source)
+        {
+            Source = source;
+            bitArray = ToBitArray(source);
+            Value = bitDictionary[ToBitInt(bitArray)];
+        }
+
         public static String ReadChunk(string c)
         {
             int b = ToBitInt(ToBitArray(c));
 
             return bitDictionary.ContainsKey(b) ?
                 bitDictionary[b].ToString() : "?";
-        }
-
-        public static string ReadDigits(string src)
-        {
-            var chunks = Chunk(src);
-            var ds = chunks.Select(ReadChunk);
-            return String.Concat(ds.ToArray());
-        }
-
-        public static bool Checksum(string d)
-        {
-            int[] checks = d.Reverse()
-                        .Zip(Enumerable.Range(1,9))
-                        .Select(x => Int32.Parse(x.Item1.ToString()) * x.Item2)
-                        .ToArray();
-            return checks.Sum() % 11 == 0;
-        }
-
-        public static string Check(string src)
-        {
-            string d = ReadDigits(src);
-            if (d.Any(c => c == '?'))
-            {
-                return d + " ILL";
-            }
-            if (Checksum(d))
-            {
-                return d;
-            }
-            else
-            {
-                return d + " ERR";
-            }
         }
 
         public static char[] ToBitChars(string src)
