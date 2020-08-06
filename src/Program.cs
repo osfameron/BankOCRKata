@@ -17,6 +17,9 @@ namespace BankOCR
         public static Dictionary<string, int> digitsDictionary =
             digits.Select((s, i) => (s, i)).ToDictionary(x => x.Item1, x => x.Item2);
 
+        public static Dictionary<int, int> bitDictionary =
+            digits.Select((s, i) => (s, i)).ToDictionary(x => ToBitInt(x.Item1), x => x.Item2);
+
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
@@ -37,11 +40,18 @@ namespace BankOCR
             return output;
         }
 
+        public static String ReadChunk(string c)
+        {
+            int b = ToBitInt(c);
+
+            return bitDictionary.ContainsKey(b) ?
+                bitDictionary[b].ToString() : "?";
+        }
+
         public static string ReadDigits(string src)
         {
             var chunks = Chunk(src);
-            var ds = chunks.Select(c => digitsDictionary.ContainsKey(c) ?
-                                    digitsDictionary[c].ToString() : "?");
+            var ds = chunks.Select(ReadChunk);
             return String.Concat(ds.ToArray());
         }
 
