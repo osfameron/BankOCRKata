@@ -125,7 +125,13 @@ namespace BankOCRTests
             Assert.AreEqual(chars, OCR.ToBitChars(shape));
             Assert.AreEqual(bits, OCR.ToBits(shape));
             Assert.AreEqual(new BitArray(bits), OCR.ToBitArray(shape));
-            Assert.AreEqual(43, OCR.ToBitInt(shape));
+            Assert.AreEqual(43, OCR.ToBitInt(OCR.ToBitArray(shape)));
+        }
+
+        [Test]
+        public void TestPerturb() {
+
+            Assert.AreEqual(new int[] {8, 0, 6, 9}, OCR.Perturb(OCR.digits[8]));
         }
     }
 }

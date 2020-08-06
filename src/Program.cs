@@ -18,7 +18,7 @@ namespace BankOCR
             digits.Select((s, i) => (s, i)).ToDictionary(x => x.Item1, x => x.Item2);
 
         public static Dictionary<int, int> bitDictionary =
-            digits.Select((s, i) => (s, i)).ToDictionary(x => ToBitInt(x.Item1), x => x.Item2);
+            digits.Select((s, i) => (s, i)).ToDictionary(x => ToBitInt(ToBitArray(x.Item1)), x => x.Item2);
 
         static void Main(string[] args)
         {
@@ -42,7 +42,7 @@ namespace BankOCR
 
         public static String ReadChunk(string c)
         {
-            int b = ToBitInt(c);
+            int b = ToBitInt(ToBitArray(c));
 
             return bitDictionary.ContainsKey(b) ?
                 bitDictionary[b].ToString() : "?";
@@ -107,12 +107,41 @@ namespace BankOCR
             bool[] bits = ToBits(src);
             return new BitArray(bits);
         }
-        public static int ToBitInt(string src)
+        public static int ToBitInt(BitArray b)
         {
-            BitArray b = ToBitArray(src);
             int[] i = new int[1];
             b.CopyTo(i, 0);
             return i[0];
+        }
+
+        public static int[] ReadBitDigit(BitArray b)
+        {
+            int i = ToBitInt(b);
+
+            if (bitDictionary.ContainsKey(i))
+            {
+                return new int[] {bitDictionary[i]};
+            }
+            else
+            {
+                return new int[] {};
+            }
+        }
+            
+        public static int[] Perturb(string v)
+        {
+            BitArray b = ToBitArray(v);
+            int[] ret = ReadBitDigit(b);
+
+            for (var pos = new BitArray(new bool[] {true,false,false,false,false,false,false});
+                 ToBitInt(pos) > 0;
+                 pos.LeftShift(1))
+            {
+                b.Xor(pos);
+                ret = ret.Concat(ReadBitDigit(b)).ToArray();
+                b.Xor(pos); // annoyingly Xor is destructive
+            }
+            return ret;
         }
     }
 }
