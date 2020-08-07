@@ -130,13 +130,20 @@ namespace BankOCRTests
             Assert.AreEqual(43, OCRDigit.ToBitInt(OCRDigit.ToBitArray(shape)));
         }
 
-        /*
         [Test]
         public void TestPerturb() {
 
-            Assert.AreEqual(new int[] {8, 0, 6, 9}, OCR.Perturb(OCR.digits[8]));
+            Assert.AreEqual(new int[] {0, 8}, new OCRDigit(0).Perturb());
+            Assert.AreEqual(new int[] {1, 7}, new OCRDigit(1).Perturb());
+            Assert.AreEqual(new int[] {2}, new OCRDigit(2).Perturb());
+            Assert.AreEqual(new int[] {3, 9}, new OCRDigit(3).Perturb());
+            Assert.AreEqual(new int[] {4}, new OCRDigit(4).Perturb());
+            Assert.AreEqual(new int[] {5, 9, 6}, new OCRDigit(5).Perturb());
+            Assert.AreEqual(new int[] {6, 8, 5}, new OCRDigit(6).Perturb());
+            Assert.AreEqual(new int[] {7, 1}, new OCRDigit(7).Perturb());
+            Assert.AreEqual(new int[] {8, 0, 6, 9}, new OCRDigit(8).Perturb());
+            Assert.AreEqual(new int[] {9, 3, 5, 8}, new OCRDigit(9).Perturb());
         }
-        */
     }
 
 }

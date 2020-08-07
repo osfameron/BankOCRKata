@@ -104,8 +104,8 @@ namespace BankOCR
 
         public OCRDigit(int value)
         {
-            Source = "Dummy Int";
-            bitArray = new BitArray(7);
+            Source = digits[value];
+            bitArray = ToBitArray(Source);
             Value = value;
         }
 
@@ -174,9 +174,9 @@ namespace BankOCR
             }
         }
             
-        public static int[] Perturb(string v)
+        public int[] Perturb()
         {
-            BitArray b = ToBitArray(v);
+            var b = bitArray;
             int[] ret = ReadBitDigit(b);
 
             for (var pos = new BitArray(new bool[] {true,false,false,false,false,false,false});
