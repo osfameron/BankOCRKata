@@ -144,6 +144,24 @@ namespace BankOCRTests
             Assert.AreEqual(new int[] {8, 0, 6, 9}, new OCRDigit(8).Perturb());
             Assert.AreEqual(new int[] {9, 3, 5, 8}, new OCRDigit(9).Perturb());
         }
+
+        [Test]
+        public void ErrorCorrectTest()
+        {
+            var ok = new OCR(@"
+    _  _     _  _  _  _  _ 
+  | _| _||_||_ |_   ||_||_|
+  ||_  _|  | _||_|  ||_| _|");
+            Assert.AreEqual("123456789", ok.Check());
+            Assert.AreEqual(new [] {"123456789"}, ok.CheckWithCorrections());
+
+            var ill = new OCR(@"
+    _  _     _  _  _  _  _ 
+ _| _| _||_||_ |_   ||_||_|
+  ||_  _|  | _||_|  ||_| _|");
+            Assert.AreEqual("?23456789 ILL", ill.Check());
+            // Assert.AreEqual(new [] {"123456789"}, ill.CheckWithCorrections());
+        }
     }
 
 }

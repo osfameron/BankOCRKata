@@ -75,6 +75,19 @@ namespace BankOCR
                 return ToString() + " ERR";
             }
         }
+        public string[] CheckWithCorrections()
+        {
+            if (Digits.Any(c => ! c.Value.HasValue))
+            {
+                return new string[] {};
+            }
+            else
+            {
+                return new string[] { ToString() };
+            }
+
+        }
+
     }
 
     public class OCRDigit {
