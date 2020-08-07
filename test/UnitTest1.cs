@@ -27,20 +27,18 @@ namespace BankOCRTests
             Assert.AreEqual(zero, "\n" + chunkedZeros[0]);
             Assert.AreEqual(zero, "\n" + chunkedZeros[1]);
             
-            Assert.AreEqual(OCR.digits[0], chunkedZeros[1]);
-        }
-        [Test]
-        public void DigitsDictTest()
-        {
-            Assert.AreEqual(0, OCR.digitsDictionary[OCR.digits[0]]);
-            Assert.AreEqual(3, OCR.digitsDictionary[OCR.digits[3]]);
-            Assert.AreEqual(9, OCR.digitsDictionary[OCR.digits[9]]);
+            Assert.AreEqual(OCRDigit.digits[0], chunkedZeros[1]);
         }
 
         [Test]
         public void ReadDigitsTest()
         {
-            Assert.AreEqual("0123456789", OCR.ReadDigits(OCR.rawDigits));
+            Assert.AreEqual("0123456789", new OCR(@"
+ _     _  _     _  _  _  _  _ 
+| |  | _| _||_||_ |_   ||_||_|
+|_|  ||_  _|  | _||_|  ||_| _|").ToString());
+
+            /*
             Assert.AreEqual("000000000", OCR.ReadDigits(@"
  _  _  _  _  _  _  _  _  _ 
 | || || || || || || || || |
@@ -85,7 +83,9 @@ namespace BankOCRTests
  _  _  _  _  _  _  _  _    
 | || || || || || || ||_   |
 |_||_||_||_||_||_||_| _|  |"));
-    }
+            */
+        }
+        /*
 
         [Test]
         public void CheckSumTest()
@@ -133,5 +133,7 @@ namespace BankOCRTests
 
             Assert.AreEqual(new int[] {8, 0, 6, 9}, OCR.Perturb(OCR.digits[8]));
         }
+        */
     }
+
 }

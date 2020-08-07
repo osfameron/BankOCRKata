@@ -18,6 +18,11 @@ namespace BankOCR
             Digits = chunks.Select(c => new OCRDigit(c)).ToArray();  
         }
 
+        public override string ToString()
+        {
+            return String.Concat(Digits.Select(d => d.ToString()).ToArray());
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
@@ -97,13 +102,12 @@ namespace BankOCR
             Value = bitDictionary[ToBitInt(bitArray)];
         }
 
-        public static String ReadChunk(string c)
+        public override String ToString()
         {
-            int b = ToBitInt(ToBitArray(c));
-
-            return bitDictionary.ContainsKey(b) ?
-                bitDictionary[b].ToString() : "?";
+            return Value.HasValue ?
+                      Value.ToString() : "?";
         }
+
 
         public static char[] ToBitChars(string src)
         {
