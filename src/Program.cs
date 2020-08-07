@@ -25,6 +25,13 @@ namespace BankOCR
             Digits = s.Select(d => new OCRDigit(Int32.Parse(d.ToString()))).ToArray(); 
         }
 
+        public OCR (int[] digits)
+        {
+            string s = String.Concat(digits.Select(d => d.ToString()).ToArray());
+            Source = $"From int {s}";
+            Digits = digits.Select(d => new OCRDigit(d)).ToArray(); 
+        }
+
         public override string ToString()
         {
             return String.Concat(Digits.Select(d => d.ToString()).ToArray());
@@ -48,6 +55,16 @@ namespace BankOCR
                 lines = lines.Select(l => l.Substring(3)).ToArray();
             }
             return output;
+        }
+
+        // Monadic Sequence
+        public static int[][] Sequence(int[][] xs)
+        {
+            return xs.Aggregate(new int[][] {new int[] {}}, (int[][] aa, int[] bb) =>     
+                (from a in aa
+                from b in bb
+                select a.Append(b).ToArray()).ToArray()
+            );
         }
 
         public bool Checksum()
@@ -77,15 +94,14 @@ namespace BankOCR
         }
         public string[] CheckWithCorrections()
         {
-            if (Digits.Any(c => ! c.Value.HasValue))
-            {
-                return new string[] {};
-            }
-            else
-            {
-                return new string[] { ToString() };
-            }
-
+            int[][] dd = Digits.Select(
+                            d => d.Value.HasValue ? new int[] {d.Value.Value} : d.Perturb())
+                        .ToArray();
+            
+            return (from d in Sequence(dd)
+                   let ocr = new OCR(d)
+                   where ocr.Checksum()
+                   select ocr.ToString()).ToArray();
         }
 
     }

@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using BankOCR;
 using System.Collections;
+using System.Linq;
+using System;
 
 namespace BankOCRTests
 {
@@ -160,8 +162,13 @@ namespace BankOCRTests
  _| _| _||_||_ |_   ||_||_|
   ||_  _|  | _||_|  ||_| _|");
             Assert.AreEqual("?23456789 ILL", ill.Check());
-            // Assert.AreEqual(new [] {"123456789"}, ill.CheckWithCorrections());
+            Assert.AreEqual(new [] {"123456789"}, ill.CheckWithCorrections());
+        }
+
+        [Test]
+        public void TestSequence () {
+            int[][] res = OCR.Sequence(new [] {new [] {1, 2}, new [] {3,4}});
+            Assert.AreEqual( new [] {new [] {1,3}, new [] {1,4}, new [] {2,3}, new [] {2,4}}, res);
         }
     }
-
 }
