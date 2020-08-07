@@ -31,59 +31,57 @@ namespace BankOCRTests
         }
 
         [Test]
-        public void ReadDigitsTest()
+        public void NewOCRTest()
         {
             Assert.AreEqual("0123456789", new OCR(@"
  _     _  _     _  _  _  _  _ 
 | |  | _| _||_||_ |_   ||_||_|
 |_|  ||_  _|  | _||_|  ||_| _|").ToString());
 
-            /*
-            Assert.AreEqual("000000000", OCR.ReadDigits(@"
+            Assert.AreEqual("000000000", new OCR(@"
  _  _  _  _  _  _  _  _  _ 
 | || || || || || || || || |
-|_||_||_||_||_||_||_||_||_|"));
-            Assert.AreEqual("111111111", OCR.ReadDigits(@"
+|_||_||_||_||_||_||_||_||_|").ToString());
+            Assert.AreEqual("111111111", new OCR(@"
                            
   |  |  |  |  |  |  |  |  |
-  |  |  |  |  |  |  |  |  |"));
-            Assert.AreEqual("222222222", OCR.ReadDigits(@"
+  |  |  |  |  |  |  |  |  |").ToString());
+            Assert.AreEqual("222222222", new OCR(@"
  _  _  _  _  _  _  _  _  _ 
  _| _| _| _| _| _| _| _| _|
-|_ |_ |_ |_ |_ |_ |_ |_ |_ "));
-            Assert.AreEqual("333333333", OCR.ReadDigits(@"
+|_ |_ |_ |_ |_ |_ |_ |_ |_ ").ToString());
+            Assert.AreEqual("333333333", new OCR(@"
  _  _  _  _  _  _  _  _  _ 
  _| _| _| _| _| _| _| _| _|
- _| _| _| _| _| _| _| _| _|"));
-            Assert.AreEqual("444444444", OCR.ReadDigits(@"
+ _| _| _| _| _| _| _| _| _|").ToString());
+            Assert.AreEqual("444444444", new OCR(@"
                            
 |_||_||_||_||_||_||_||_||_|
-  |  |  |  |  |  |  |  |  |"));
-            Assert.AreEqual("555555555", OCR.ReadDigits(@"
+  |  |  |  |  |  |  |  |  |").ToString());
+            Assert.AreEqual("555555555", new OCR(@"
  _  _  _  _  _  _  _  _  _ 
 |_ |_ |_ |_ |_ |_ |_ |_ |_ 
- _| _| _| _| _| _| _| _| _|"));
-            Assert.AreEqual("666666666", OCR.ReadDigits(@"
+ _| _| _| _| _| _| _| _| _|").ToString());
+            Assert.AreEqual("666666666", new OCR(@"
  _  _  _  _  _  _  _  _  _ 
 |_ |_ |_ |_ |_ |_ |_ |_ |_ 
-|_||_||_||_||_||_||_||_||_|"));
-            Assert.AreEqual("777777777", OCR.ReadDigits(@"
+|_||_||_||_||_||_||_||_||_|").ToString());
+            Assert.AreEqual("777777777", new OCR(@"
  _  _  _  _  _  _  _  _  _ 
   |  |  |  |  |  |  |  |  |
-  |  |  |  |  |  |  |  |  |"));
-            Assert.AreEqual("888888888", OCR.ReadDigits(@"
+  |  |  |  |  |  |  |  |  |").ToString());
+            Assert.AreEqual("888888888", new OCR(@"
  _  _  _  _  _  _  _  _  _ 
 |_||_||_||_||_||_||_||_||_|
-|_||_||_||_||_||_||_||_||_|"));
-            Assert.AreEqual("999999999", OCR.ReadDigits(@"
+|_||_||_||_||_||_||_||_||_|").ToString());
+            Assert.AreEqual("999999999", new OCR(@"
  _  _  _  _  _  _  _  _  _ 
 |_||_||_||_||_||_||_||_||_|
- _| _| _| _| _| _| _| _| _|"));
-            Assert.AreEqual("000000051", OCR.ReadDigits(@"
+ _| _| _| _| _| _| _| _| _|").ToString());
+            Assert.AreEqual("000000051", new OCR(@"
  _  _  _  _  _  _  _  _    
 | || || || || || || ||_   |
-|_||_||_||_||_||_||_| _|  |"));
-            */
+|_||_||_||_||_||_||_| _|  |").ToString());
         }
         /*
 
