@@ -33,9 +33,7 @@ namespace BankOCR
         }
 
         public override string ToString()
-        {
-            return String.Concat(Digits.Select(d => d.ToString()).ToArray());
-        }
+            => String.Concat(Digits.Select(d => d.ToString()).ToArray());
 
         static void Main(string[] args)
         {
@@ -150,11 +148,8 @@ namespace BankOCR
         }
 
         public override String ToString()
-        {
-            return Value.HasValue ?
+            => Value.HasValue ?
                       Value.ToString() : "?";
-        }
-
 
         public static char[] ToBitChars(string src)
         {
@@ -177,11 +172,10 @@ namespace BankOCR
                 .ToArray();
             return bools;
         }
+
         public static BitArray ToBitArray(string src)
-        {
-            bool[] bits = ToBits(src);
-            return new BitArray(bits);
-        }
+            => new BitArray(ToBits(src));
+
         public static int ToBitInt(BitArray b)
         {
             int[] i = new int[1];
