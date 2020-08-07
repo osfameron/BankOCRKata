@@ -83,15 +83,16 @@ namespace BankOCRTests
 | || || || || || || ||_   |
 |_||_||_||_||_||_||_| _|  |").ToString());
         }
-        /*
+
 
         [Test]
-        public void CheckSumTest()
+        public void ChecksumTest()
         {
-            Assert.True(OCR.Checksum("457508000"));
-            Assert.False(OCR.Checksum("457508001"));
+            Assert.True(new OCR(457508000).Checksum());
+            Assert.False(new OCR(457508001).Checksum());
         }
 
+        /*
         [Test]
         public void CheckTest()
         {

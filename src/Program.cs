@@ -18,6 +18,13 @@ namespace BankOCR
             Digits = chunks.Select(c => new OCRDigit(c)).ToArray();  
         }
 
+        public OCR (int value)
+        {
+            string s = value.ToString();
+            Source = $"From int {s}";
+            Digits = s.Select(d => new OCRDigit(Int32.Parse(d.ToString()))).ToArray(); 
+        }
+
         public override string ToString()
         {
             return String.Concat(Digits.Select(d => d.ToString()).ToArray());
@@ -92,6 +99,13 @@ namespace BankOCR
         {
             Source = source;
             bitArray = ToBitArray(source);
+            Value = value;
+        }
+
+        public OCRDigit(int value)
+        {
+            Source = "Dummy Int";
+            bitArray = new BitArray(7);
             Value = value;
         }
 
