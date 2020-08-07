@@ -110,7 +110,7 @@ namespace BankOCRTests
   ||_  _|  | _||_|  ||_| _ ").Check());
         }
 
-        /*
+
         [Test]
         public void BitArrayTest()
         {
@@ -121,13 +121,16 @@ namespace BankOCRTests
  _ 
 | |
  _ ";
-            char[] chars = {'_','|',' ','|',' ','_',' '};
-            Assert.AreEqual(chars, OCR.ToBitChars(shape));
-            Assert.AreEqual(bits, OCR.ToBits(shape));
-            Assert.AreEqual(new BitArray(bits), OCR.ToBitArray(shape));
-            Assert.AreEqual(43, OCR.ToBitInt(OCR.ToBitArray(shape)));
+            char[] chars = {'_',
+                            '|',' ','|',
+                            ' ','_',' '};
+            Assert.AreEqual(chars, OCRDigit.ToBitChars(shape));
+            Assert.AreEqual(bits, OCRDigit.ToBits(shape));
+            Assert.AreEqual(new BitArray(bits), OCRDigit.ToBitArray(shape));
+            Assert.AreEqual(43, OCRDigit.ToBitInt(OCRDigit.ToBitArray(shape)));
         }
 
+        /*
         [Test]
         public void TestPerturb() {
 
