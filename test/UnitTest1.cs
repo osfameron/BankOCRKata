@@ -92,24 +92,25 @@ namespace BankOCRTests
             Assert.False(new OCR(457508001).Checksum());
         }
 
-        /*
         [Test]
         public void CheckTest()
         {
-            Assert.AreEqual("000000051", OCR.Check(@"
+            Assert.AreEqual("000000051", new OCR(@"
  _  _  _  _  _  _  _  _    
 | || || || || || || ||_   |
-|_||_||_||_||_||_||_| _|  |"));
-            Assert.AreEqual("000000851 ERR", OCR.Check(@"
+|_||_||_||_||_||_||_| _|  |").Check());
+
+            Assert.AreEqual("000000851 ERR", new OCR(@"
  _  _  _  _  _  _  _  _    
 | || || || || || ||_||_   |
-|_||_||_||_||_||_||_| _|  |"));
-            Assert.AreEqual("1234?678? ILL", OCR.Check(@"
+|_||_||_||_||_||_||_| _|  |").Check());
+            Assert.AreEqual("1234?678? ILL", new OCR(@"
     _  _     _  _  _  _  _ 
   | _| _||_| _ |_   ||_||_|
-  ||_  _|  | _||_|  ||_| _ "));
+  ||_  _|  | _||_|  ||_| _ ").Check());
         }
 
+        /*
         [Test]
         public void BitArrayTest()
         {

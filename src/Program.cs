@@ -64,15 +64,15 @@ namespace BankOCR
         {
             if (Digits.Any(c => ! c.Value.HasValue))
             {
-                return "{output}" + " ILL";
+                return ToString() + " ILL";
             }
             if (Checksum())
             {
-                return "{output} OK";
+                return ToString();
             }
             else
             {
-                return "{output} ERR";
+                return ToString() + " ERR";
             }
         }
     }
@@ -113,7 +113,11 @@ namespace BankOCR
         {
             Source = source;
             bitArray = ToBitArray(source);
-            Value = bitDictionary[ToBitInt(bitArray)];
+            int v;
+            if (bitDictionary.TryGetValue(ToBitInt(bitArray), out v))
+            {
+                Value = v;
+            }
         }
 
         public override String ToString()
